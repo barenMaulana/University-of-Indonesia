@@ -15,7 +15,7 @@ class UniversityCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->collection
+            'data' => UniversityResource::collection($this->collection)
         ];
     }
 }
