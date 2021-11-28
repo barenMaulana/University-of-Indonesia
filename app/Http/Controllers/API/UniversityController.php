@@ -64,9 +64,15 @@ class UniversityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(University $university)
     {
-        //
+        return (new UniversityResource($university))
+        ->additional([
+            'status' => 'success',
+            'message' => 'University details'
+        ])
+        ->response()
+        ->setStatusCode(200);
     }
 
     /**
