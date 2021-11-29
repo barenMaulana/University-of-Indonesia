@@ -23,7 +23,7 @@ class CreateUniversity extends BaseService
 
 
     /**
-     * Create a user.
+     * Create a university.
      *
      * @param  array  $data
      * @return University , Error
@@ -45,10 +45,10 @@ class CreateUniversity extends BaseService
     }
 
     /**
-     * Create a user.
+     * Create a university.
      *
      * @param  array  $data
-     * @return User
+     * @return University
      */
     protected function createUniversity($data) : University
     {

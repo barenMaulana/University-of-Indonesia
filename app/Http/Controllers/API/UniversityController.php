@@ -8,6 +8,7 @@ use App\Models\University;
 use App\Http\Resources\UniversityCollection;
 use App\Http\Resources\UniversityResource;
 use App\Services\University\CreateUniversity;
+use App\Services\University\UpdateUniversity;
 
 class UniversityController extends Controller
 {
@@ -55,7 +56,13 @@ class UniversityController extends Controller
             return response()->json($response,400);
         }
 
-        return new UniversityResource($university);
+        return (new UniversityResource($university))
+        ->additional([
+            'status' => 'success',
+            'message' => 'New University added'
+        ])
+        ->response()
+        ->setStatusCode(201);
     }
 
     /**
@@ -84,7 +91,26 @@ class UniversityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $university = new UpdateUniversity;
+        list($university, $error) = $university->execute($request->all(),$id);
+
+        if ($error != null) {
+            $response = [
+                'status' => 'failed',
+                'message' => $error,
+                'data' => $university
+            ];
+            return response()
+            ->json($response,400);
+        }
+
+        return (new UniversityResource($university))
+        ->additional([
+            'status' => 'success',
+            'message' => 'University updated'
+        ])
+        ->response()
+        ->setStatusCode(200);
     }
 
     /**
