@@ -9,6 +9,7 @@ use App\Http\Resources\UniversityCollection;
 use App\Http\Resources\UniversityResource;
 use App\Services\University\CreateUniversity;
 use App\Services\University\UpdateUniversity;
+use App\Services\University\DeleteUniversity;
 
 class UniversityController extends Controller
 {
@@ -121,7 +122,26 @@ class UniversityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $university = new DeleteUniversity;
+        list($university,$error) = $university->execute($id);
+
+        if ($error != null) {
+            $response = [
+                'status' => 'failed',
+                'message' => $error
+            ];
+
+            return response()
+            ->json($response,400);
+        }
+
+        $response = [
+            'status' => 'success',
+            'message' => 'university deleted'
+        ];
+
+        return response()
+            ->json($response,200);
     }
 
        /**
